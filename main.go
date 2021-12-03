@@ -1,5 +1,5 @@
-// acmecrystal watches for .cr files being written then runs the
-// crystal formatting tool on that written file and then reloads the
+// acme-tf watches for .cr files being written then runs the
+// terraform formatting tool on that written file and then reloads the
 // acme window with the formatted file
 package main
 
@@ -40,7 +40,7 @@ func main() {
 			log.Fatal(err)
 		}
 
-		//If log reports that a crystal file is being "put", then format it
+		//If log reports that a tf file is being "put", then format it
 		if event.Name != "" && event.Op == "put" && strings.HasSuffix(event.Name, ".tf") {
 			terraformFormat(event.ID, event.Name)
 		}
@@ -70,8 +70,7 @@ func terraformFormat(id int, name string) {
 	// `crystal tool format <filename>` reformats the file in place.  So
 	// after running this the file on disk will be reformatted, but not
 	// the file in the Acme window
-	// os.Setenv("TERM", "dumb") when my pull request gets accepted this should work
-	// https://github.com/crystal-lang/crystal/pull/8271
+
 	out, err := exec.Command("terraform", "fmt", name).CombinedOutput()
 	if err != nil {
 		log.Printf("%s", out)
