@@ -1,4 +1,4 @@
-// acme-tf watches for .cr files being written then runs the
+// acme-tf watches for .tf files being written then runs the
 // terraform formatting tool on that written file and then reloads the
 // acme window with the formatted file
 package main
