@@ -67,7 +67,7 @@ func terraformFormat(id int, name string) {
 		return
 	}
 
-	// `crystal tool format <filename>` reformats the file in place.  So
+	// `terraform format <filename>` reformats the file in place.  So
 	// after running this the file on disk will be reformatted, but not
 	// the file in the Acme window
 
