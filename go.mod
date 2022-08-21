@@ -1,4 +1,4 @@
-module github.com/ilanpillemer/acme-tf
+module github.com/ilanpillemer/acme-ex
 
 go 1.17
 

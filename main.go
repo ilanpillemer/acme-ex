@@ -1,4 +1,4 @@
-// acme-tf watches for .tf files being written then runs the
+// acme-ex watches for .ex files being written then runs the
 // terraform formatting tool on that written file and then reloads the
 // acme window with the formatted file
 package main
@@ -17,7 +17,7 @@ import (
 // web https://9fans.github.io/plan9port/man/man4/acme.html
 func main() {
 	flag.Parse()
-	log.Println("starting acme-fmt")
+	log.Println("starting acme-ex")
 	//log   reports a log of window operations since the opening of the
 	//log file. Each line describes a single operation using three fields
 	//separated by single spaces: the decimal window ID, the operation,
@@ -40,14 +40,14 @@ func main() {
 			log.Fatal(err)
 		}
 
-		//If log reports that a tf file is being "put", then format it
-		if event.Name != "" && event.Op == "put" && strings.HasSuffix(event.Name, ".tf") {
-			terraformFormat(event.ID, event.Name)
+		//If log reports that a ex file is being "put", then format it
+		if event.Name != "" && event.Op == "put" && strings.HasSuffix(event.Name, ".ex") {
+			ElixirFormat(event.ID, event.Name)
 		}
 	}
 }
 
-func terraformFormat(id int, name string) {
+func ElixirFormat(id int, name string) {
 	// When a command is run under acme, a directory holding these files
 	// is posted as the 9P service acme
 	w, err := acme.Open(id, nil)
@@ -67,11 +67,11 @@ func terraformFormat(id int, name string) {
 		return
 	}
 
-	// `terraform format <filename>` reformats the file in place.  So
+	// `mix format <filename>` reformats the file in place.  So
 	// after running this the file on disk will be reformatted, but not
 	// the file in the Acme window
 
-	out, err := exec.Command("terraform", "fmt", name).CombinedOutput()
+	out, err := exec.Command("mix", "format", name).CombinedOutput()
 	if err != nil {
 		log.Printf("%s", out)
 		return
